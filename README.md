@@ -26,8 +26,7 @@ Power BI Desktop, Power Query, DAX, custom theme
 - `03_IPO_Theme.json`: dark theme
 
 ## Demo
-[Watch the screen recording](PASTE-YOUR-VIDEO-LINK-HERE)
-
+https://lnkd.in/p/dhPhcsmt
 ## Data note
 Jio figures were researched in Oct 2026. Subscription multiples vary by source,
 so verify on NSE/BSE. Other IPO rows were entered manually and should be verified
