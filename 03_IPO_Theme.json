@@ -1,0 +1,31 @@
+{
+  "name": "IPO Night",
+  "dataColors": ["#00E5A0", "#5B8CFF", "#FFB84D", "#FF5C7A", "#B07CFF", "#4DD0E1", "#8A94A6", "#E6EDF7"],
+  "background": "#0B1020",
+  "foreground": "#E6EDF7",
+  "tableAccent": "#00E5A0",
+  "good": "#00E5A0",
+  "bad": "#FF5C7A",
+  "neutral": "#FFB84D",
+  "maximum": "#00E5A0",
+  "center": "#FFB84D",
+  "minimum": "#FF5C7A",
+  "textClasses": {
+    "label":   { "fontSize": 11, "fontFace": "Segoe UI", "color": "#AAB4C8" },
+    "callout": { "fontSize": 32, "fontFace": "Segoe UI Semibold", "color": "#E6EDF7" },
+    "title":   { "fontSize": 14, "fontFace": "Segoe UI Semibold", "color": "#E6EDF7" },
+    "header":  { "fontSize": 12, "fontFace": "Segoe UI Semibold", "color": "#E6EDF7" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#131A30" } }, "transparency": 0 }],
+        "border": [{ "show": true, "color": { "solid": { "color": "#222B47" } }, "radius": 8 }],
+        "title": [{ "show": true, "fontColor": { "solid": { "color": "#E6EDF7" } }, "fontSize": 12 }]
+      }
+    },
+    "page": {
+      "*": { "background": [{ "color": { "solid": { "color": "#0B1020" } }, "transparency": 0 }] }
+    }
+  }
+}

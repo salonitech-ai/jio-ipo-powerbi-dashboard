@@ -1,0 +1,11 @@
+IPO_ID,Company,Sector,Issue_Type,Open_Date,Close_Date,Listing_Date,Band_Low,Band_High,Issue_Price,Lot_Size,Issue_Size_Cr,Listing_Price_NSE,Subscription_Overall_x,GMP_Pre_Close,Source_Status
+1,Jio Platforms,Telecom & Digital,Fresh Issue,2026-10-21,2026-10-23,2026-10-28,1065,1119,1119,12,30213,1358,16.36,243,Researched Oct 2026 (subscription x differs by source; verify on NSE/BSE)
+2,Hyundai Motor India,Automobile,OFS,2024-10-15,2024-10-17,2024-10-22,1865,1960,1960,7,27870,1934,2.37,,From memory - VERIFY
+3,LIC of India,Insurance,Fresh + OFS,2022-05-04,2022-05-09,2022-05-17,902,949,949,15,21008,867,2.95,,From memory - VERIFY
+4,Paytm (One97),Fintech,Fresh + OFS,2021-11-08,2021-11-10,2021-11-18,2080,2150,2150,6,18300,1955,1.89,,From memory - VERIFY
+5,Coal India,Mining & Energy,OFS,2010-10-18,2010-10-21,2010-11-04,225,245,245,20,15199,342,15.28,,From memory - VERIFY
+6,Swiggy,Food Delivery,Fresh + OFS,2024-11-06,2024-11-08,2024-11-13,371,390,390,38,11327,420,3.59,,From memory - VERIFY
+7,Zomato,Food Delivery,Fresh + OFS,2021-07-14,2021-07-16,2021-07-23,72,76,76,195,9375,116,38.25,,From memory - VERIFY
+8,Bajaj Housing Finance,Financial Services,Fresh + OFS,2024-09-09,2024-09-11,2024-09-16,66,70,70,214,6560,150,63.61,,From memory - VERIFY
+9,Nykaa (FSN E-Commerce),E-commerce,Fresh + OFS,2021-10-28,2021-11-01,2021-11-10,1085,1125,1125,13,5352,2001,81.78,,From memory - VERIFY
+10,Tata Technologies,IT & Engineering,OFS,2023-11-22,2023-11-24,2023-11-30,475,500,500,30,3042.51,1200,69.43,,From memory - VERIFY

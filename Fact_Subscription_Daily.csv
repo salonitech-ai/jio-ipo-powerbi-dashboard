@@ -1,0 +1,4 @@
+IPO_ID,Company,Day,Date,Overall_Subscription_x,QIB_x,NII_x,Retail_x,Source_Status
+1,Jio Platforms,1,2026-10-21,3.15,,,,Inc42 end of Day 1
+1,Jio Platforms,2,2026-10-22,,,,,FILL IN - sources conflict (3.65x / 5.2x / 5.54x); use NSE bid details
+1,Jio Platforms,3,2026-10-23,16.36,,,,Final; category split to be filled from NSE bid details

@@ -1,0 +1,88 @@
+// ===== MODEL SETUP =====
+// Relationships: Fact_IPO[Listing_Date] (many) -> Dim_Date[Date] (one)
+//                Fact_Subscription_Daily[IPO_ID] (many) -> Fact_IPO[IPO_ID] (one)
+// Mark Dim_Date as a Date table.
+// Create a disconnected What-If table (Modeling > New Table):
+//   Lots = GENERATESERIES(1, 10, 1)
+
+// ===== CORE KPIs =====
+Total IPOs = COUNTROWS(Fact_IPO)
+
+Total Raised (Cr) = SUM(Fact_IPO[Issue_Size_Cr])
+
+Avg Listing Gain % = AVERAGE(Fact_IPO[Listing_Gain_Pct])
+
+Median Listing Gain % = MEDIAN(Fact_IPO[Listing_Gain_Pct])
+
+% Listed Above Issue = 
+DIVIDE(
+    CALCULATE(COUNTROWS(Fact_IPO), Fact_IPO[Listing_Gain_Pct] > 0),
+    COUNTROWS(Fact_IPO)
+)
+
+Avg Subscription (x) = AVERAGE(Fact_IPO[Subscription_Overall_x])
+
+// ===== SINGLE-IPO MEASURES (use with a slicer or in a card with one company selected) =====
+Issue Price = MAX(Fact_IPO[Issue_Price])
+Listing Price = MAX(Fact_IPO[Listing_Price_NSE])
+Min Investment (Rs) = MAX(Fact_IPO[Min_Investment_Rs])
+
+Listing Gain % (Selected) = 
+DIVIDE([Listing Price] - [Issue Price], [Issue Price])
+
+// ===== BEGINNER "WOW" MEASURES =====
+Lots Selected = SELECTEDVALUE(Lots[Lots], 1)
+
+Money Invested (Rs) = 
+SUMX(Fact_IPO, Fact_IPO[Lot_Size] * Fact_IPO[Issue_Price]) * [Lots Selected]
+
+Gain on Listing Day (Rs) = 
+SUMX(Fact_IPO, Fact_IPO[Lot_Size] * (Fact_IPO[Listing_Price_NSE] - Fact_IPO[Issue_Price])) * [Lots Selected]
+
+Story Text = 
+VAR _name = SELECTEDVALUE(Fact_IPO[Company], "this IPO")
+VAR _inv  = FORMAT([Money Invested (Rs)], "#,##0")
+VAR _gain = [Gain on Listing Day (Rs)]
+VAR _txt  = FORMAT(ABS(_gain), "#,##0")
+RETURN
+    IF(
+        _gain >= 0,
+        "Put Rs " & _inv & " into " & _name & " and you were up Rs " & _txt & " on listing day.",
+        "Put Rs " & _inv & " into " & _name & " and you were down Rs " & _txt & " on listing day."
+    )
+
+// ===== EXPERT MEASURES =====
+Oversubscription Bucket = 
+SWITCH(
+    TRUE(),
+    MAX(Fact_IPO[Subscription_Overall_x]) >= 50, "50x+",
+    MAX(Fact_IPO[Subscription_Overall_x]) >= 10, "10-50x",
+    MAX(Fact_IPO[Subscription_Overall_x]) >= 3,  "3-10x",
+    "Under 3x"
+)
+
+// Correlation of subscription level with listing gain (only across IPOs in filter context)
+Sub vs Gain Correlation = 
+VAR _t = SUMMARIZE(Fact_IPO, Fact_IPO[IPO_ID], "S", MAX(Fact_IPO[Subscription_Overall_x]), "G", MAX(Fact_IPO[Listing_Gain_Pct]))
+VAR _n = COUNTROWS(_t)
+VAR _sx = SUMX(_t, [S]) VAR _sy = SUMX(_t, [G])
+VAR _sxy = SUMX(_t, [S] * [G])
+VAR _sx2 = SUMX(_t, [S] ^ 2) VAR _sy2 = SUMX(_t, [G] ^ 2)
+RETURN DIVIDE(_n * _sxy - _sx * _sy, SQRT((_n * _sx2 - _sx ^ 2) * (_n * _sy2 - _sy ^ 2)))
+
+// GMP predicted vs actual (only where a GMP was recorded)
+GMP Pct = AVERAGE(Fact_IPO[GMP_Pct])
+GMP Error (pts) = [GMP Pct] - [Avg Listing Gain %]
+
+// Rank by issue size, for the "Biggest IPOs" bar chart
+Size Rank = RANKX(ALL(Fact_IPO[Company]), CALCULATE(SUM(Fact_IPO[Issue_Size_Cr])), , DESC, Dense)
+
+// Highlight colour: Jio in accent, others muted (Format > Bars > Colors > fx > Field value)
+Bar Colour = IF(MAX(Fact_IPO[Is_Jio]), "#00E5A0", "#5B6B8C")
+
+// Gain/loss colour for conditional formatting
+Gain Colour = IF([Listing Gain % (Selected)] >= 0, "#00E5A0", "#FF5C7A")
+
+// ===== POST-LISTING PERFORMANCE (needs Jio_Price_History) =====
+// Latest Close = CALCULATE(MAX(Jio_Price_History[Close]), LASTDATE(Jio_Price_History[Date]))
+// Return Since Issue % = DIVIDE([Latest Close] - 1119, 1119)
